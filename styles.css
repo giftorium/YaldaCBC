@@ -7,37 +7,37 @@
    CSS VARIABLES - PERSIAN PALETTE
    ======================================== */
 :root {
-    /* Persian Carpet Colors */
-    --primary-red: #8B1538;
-    --pomegranate: #C41E3A;
-    --ruby: #9B111E;
-    --burgundy: #6B0F1A;
+    /* Pomegranate Reds */
+    --primary-red: #a10f2b;
+    --pomegranate: #b5122f;
+    --ruby: #d7263d;
+    --burgundy: #4a0c16;
     
-    /* Gold & Luxury Accents */
-    --persian-gold: #D4AF37;
-    --antique-gold: #C5A572;
-    --bronze: #CD7F32;
+    /* Neutral Accents (White & Silver) */
+    --persian-gold: #f5f5f5;
+    --antique-gold: #e0e0e0;
+    --bronze: #bfbfbf;
     
-    /* Deep Blues from Persian Tiles */
-    --midnight-blue: #191970;
-    --persian-blue: #1C39BB;
-    --turquoise: #40E0D0;
+    /* Deep Blacks */
+    --midnight-blue: #050505;
+    --persian-blue: #121212;
+    --turquoise: #ffffff;
     
-    /* Rich Earth Tones */
-    --saffron: #F4C430;
-    --terracotta: #E2725B;
-    --cream: #FFFDD0;
-    --ivory: #FFFFF0;
+    /* Soft Whites */
+    --saffron: #fafafa;
+    --terracotta: #d9d9d9;
+    --cream: #f8f8f8;
+    --ivory: #ffffff;
     
     /* Dark Sophistication */
-    --deep-plum: #2C1810;
-    --charcoal: #1A1A1D;
-    --ink: #0D0D0F;
+    --deep-plum: #0f0507;
+    --charcoal: #1a1a1d;
+    --ink: #050505;
     
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, var(--primary-red) 0%, var(--burgundy) 100%);
+    --gradient-primary: linear-gradient(135deg, var(--primary-red) 0%, #080101 100%);
     --gradient-gold: linear-gradient(135deg, var(--persian-gold) 0%, var(--bronze) 100%);
-    --gradient-silk: linear-gradient(180deg, rgba(139, 21, 56, 0.95) 0%, rgba(107, 15, 26, 0.98) 100%);
+    --gradient-silk: linear-gradient(180deg, rgba(161, 15, 43, 0.95) 0%, rgba(10, 0, 4, 0.98) 100%);
     
     /* Spacing */
     --spacing-xs: 0.5rem;
