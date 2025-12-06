@@ -722,149 +722,180 @@ p {
     position: relative;
     margin-top: var(--spacing-lg);
     gap: var(--spacing-lg);
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     display: flex;
-    flex-direction: row;
     perspective: 2000px;
 }
 
-.book-cover {
+.oracle-book {
     position: relative;
-    width: clamp(260px, 30vw, 340px);
-    min-height: 420px;
-    padding: var(--spacing-lg) var(--spacing-md);
-    background: linear-gradient(135deg, #1e070c 0%, #4a0c16 60%, #1d0408 100%);
+    width: clamp(280px, 38vw, 460px);
+    min-height: 460px;
+    perspective: 1800px;
+    transform-style: preserve-3d;
+}
+
+.cover {
+    position: absolute;
+    inset: 0;
     border-radius: 20px;
     border: 4px solid rgba(212, 175, 55, 0.35);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(212, 175, 55, 0.15);
-    overflow: hidden;
-    transform: rotateY(-8deg);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
     transform-origin: left center;
-    transition: transform 1s ease;
+    backface-visibility: hidden;
+    transition: transform 0.9s ease, box-shadow 0.9s ease;
 }
 
-.book-stage.book-open .book-cover {
-    transform: rotateY(-12deg);
+.cover-front {
+    background: linear-gradient(135deg, #150306 0%, #4a0c16 60%, #1d0408 100%);
+    padding: var(--spacing-lg) var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    text-align: center;
+    transform: rotateY(0deg);
 }
 
-.book-cover::before {
+.cover-front::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 60%);
+    border-radius: inherit;
+    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.12), transparent 60%);
     pointer-events: none;
 }
 
-.book-spine {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 28px;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(212, 175, 55, 0.2));
-    border-right: 2px solid rgba(0, 0, 0, 0.5);
-    box-shadow: inset -4px 0 8px rgba(0, 0, 0, 0.4);
+.cover-back {
+    background: linear-gradient(135deg, #0d0103, #2c050c);
+    transform: rotateY(-6deg);
+    z-index: 0;
 }
 
-.book-face {
-    position: relative;
-    margin-left: 20px;
-    padding-top: var(--spacing-sm);
-}
-
-.book-title {
-    text-align: center;
-    color: var(--persian-gold);
-    font-family: var(--font-display);
-    letter-spacing: 0.2rem;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    margin-bottom: var(--spacing-sm);
-}
-
-#fortuneWheel {
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.6));
-    border-radius: 50%;
-    border: 6px double rgba(212, 175, 55, 0.4);
-    background: radial-gradient(circle, rgba(0, 0, 0, 0.4), transparent 60%);
-}
-
-.wheel-pointer {
-    position: absolute;
-    top: 90px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 22px solid transparent;
-    border-right: 22px solid transparent;
-    border-bottom: 40px solid rgba(212, 175, 55, 0.9);
-    z-index: 5;
-    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.5));
-}
-
-.spin-button {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 6px solid rgba(212, 175, 55, 0.8);
-    background: radial-gradient(circle at 30% 30%, #fff1c1, #d4af37 60%, #b67c19);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-family: var(--font-display);
-    color: var(--ink);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.spin-button:hover:not(:disabled) {
-    transform: translateX(-50%) scale(1.05);
-    box-shadow: 0 20px 45px rgba(212, 175, 55, 0.6);
-}
-
-.spin-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.button-text {
+.cover-subtitle {
+    font-family: var(--font-accent);
     font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.cover-title {
+    font-size: 2rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--persian-gold);
+}
+
+.cover-note {
+    font-family: var(--font-accent);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.cover-button {
+    margin-top: var(--spacing-sm);
+    padding: 0.9rem 1.8rem;
+    border-radius: 999px;
+    border: 2px solid var(--persian-gold);
+    background: rgba(245, 245, 245, 0.1);
+    color: var(--cream);
+    font-family: var(--font-display);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    z-index: 2;
+}
+
+.cover-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    background: rgba(245, 245, 245, 0.2);
+}
+
+.cover-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.book-stage.book-open .cover-front {
+    transform: rotateY(-150deg);
+    box-shadow: -20px 25px 45px rgba(0, 0, 0, 0.5);
+}
+
+.book-pages {
+    position: relative;
+    width: 90%;
+    height: 90%;
+    margin: 0 auto;
+    top: 5%;
+    display: flex;
+    gap: 4%;
+    transform: translateZ(-10px);
+}
+
+.page {
+    flex: 1;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #fef6dd 0%, #f2e0b9 50%, #f4ecd1 100%);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(115, 80, 28, 0.15);
+    transform-origin: left center;
+    position: relative;
+}
+
+.page-left {
+    background: linear-gradient(135deg, #f0dfbf, #f8f0d8);
+    transform: rotateY(-6deg);
+}
+
+.page-right {
+    transform: rotateY(4deg);
+    padding: var(--spacing-md);
+}
+
+.book-stage.book-open .page-right,
+.oracle-book.is-open .page-right {
+    transform: rotateY(0deg);
+}
+
+.book-stage.book-open .page-left,
+.oracle-book.is-open .page-left {
+    transform: rotateY(-2deg);
+}
+
+.page-edge {
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    left: calc(5% - 8px);
+    width: 16px;
+    background: repeating-linear-gradient(180deg, rgba(115, 80, 28, 0.2), rgba(115, 80, 28, 0.2) 6px, rgba(255, 255, 255, 0.5) 6px, rgba(255, 255, 255, 0.5) 12px);
+    border-radius: 6px;
+    box-shadow: inset -2px 0 4px rgba(0, 0, 0, 0.2);
 }
 
 .fortune-result {
-    flex: 1;
-    max-width: 600px;
-    background: linear-gradient(135deg, #f8f1d4 0%, #f2e0b9 60%, #f6edd5 100%);
-    border-radius: 18px;
-    border: 1px solid rgba(115, 80, 28, 0.2);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), inset 0 0 50px rgba(255, 255, 255, 0.3);
-    padding: var(--spacing-lg);
-    position: relative;
+    height: 100%;
+    background: transparent;
+    border: none;
+    padding: 0;
     opacity: 0;
-    transform: translateX(40px) rotateY(8deg);
-    transition: opacity 0.6s ease, transform 0.8s ease;
+    transform: translateX(10px) rotateY(-6deg);
+    transition: opacity 0.5s ease 0.3s, transform 0.6s ease 0.3s;
+    position: relative;
 }
 
 .fortune-result::before {
     content: '';
     position: absolute;
-    inset: 12px;
-    border: 2px solid rgba(115, 80, 28, 0.15);
+    inset: 10px;
+    border: 1.5px dashed rgba(115, 80, 28, 0.25);
     pointer-events: none;
 }
 
@@ -880,17 +911,17 @@ p {
 
 .page-ribbon {
     position: absolute;
-    top: -18px;
+    top: -16px;
     right: 40px;
-    padding: 0.4rem 1.5rem;
+    padding: 0.3rem 1.4rem;
     background: linear-gradient(135deg, var(--primary-red), var(--burgundy));
     color: var(--cream);
     font-family: var(--font-display);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     border-radius: 20px 20px 0 0;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 18px rgba(0, 0, 0, 0.25);
 }
 
 .page-content {
@@ -901,7 +932,7 @@ p {
 .page-intro {
     font-family: var(--font-accent);
     color: rgba(70, 45, 12, 0.8);
-    font-size: 1.05rem;
+    font-size: 1rem;
     margin-bottom: var(--spacing-sm);
     text-align: center;
 }
@@ -923,7 +954,7 @@ p {
 }
 
 .poem-interpretation {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: #4a2c0d;
     background: rgba(255, 255, 255, 0.5);
     padding: var(--spacing-md);
@@ -934,22 +965,22 @@ p {
 
 .spin-again-btn {
     width: 100%;
-    padding: 1rem;
-    background: linear-gradient(135deg, rgba(122, 76, 32, 0.9), rgba(57, 35, 14, 0.9));
+    padding: 0.9rem;
+    background: linear-gradient(135deg, rgba(122, 76, 32, 0.95), rgba(57, 35, 14, 0.9));
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     font-family: var(--font-display);
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--cream);
     cursor: pointer;
     margin-top: var(--spacing-md);
-    box-shadow: 0 10px 25px rgba(57, 35, 14, 0.4);
+    box-shadow: 0 10px 25px rgba(57, 35, 14, 0.35);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .spin-again-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(57, 35, 14, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(57, 35, 14, 0.45);
 }
 
 /* ========================================
