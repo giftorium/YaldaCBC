@@ -224,37 +224,31 @@
                     <p class="cta-description">Ready to receive your divine guidance from Hafez?</p>
                     <button id="getFaalButton" class="get-faal-button">
                         <span class="cta-icon"><span class="icon icon-scroll" aria-hidden="true"></span></span>
-                        <span class="cta-text">Open the Divan</span>
+                        <span class="cta-text">Get My Fāl-e Hafez</span>
                     </button>
                 </div>
                 
-                <div class="book-stage" id="wheelContainer" style="display: none;">
-                    <div class="oracle-book" id="oracleBook">
-                        <div class="cover cover-front">
-                            <p class="cover-subtitle">Yalda Night Edition</p>
-                            <h3 class="cover-title">Divan of Hafez</h3>
-                            <p class="cover-note">Tap to reveal a sacred page</p>
-                            <button id="openBookButton" class="cover-button">
-                                <span class="button-text">Reveal a Poem</span>
-                            </button>
+                <div class="wheel-wrapper" id="wheelContainer" style="display: none;">
+                    <div class="wheel-pointer"></div>
+                    <canvas id="fortuneWheel" width="600" height="600"></canvas>
+                    <button id="spinButton" class="spin-button">
+                        <span class="button-text">Reveal a Poem Page</span>
+                    </button>
+                </div>
+                
+                <div id="fortuneResult" class="fortune-result hidden">
+                    <div class="poem-page">
+                        <div class="page-tabs">
+                            <span class="page-tab">Divan Folio</span>
+                            <span class="page-tab">Night of Light</span>
                         </div>
-                        <div class="cover cover-back"></div>
-                        <div class="book-pages">
-                            <div class="page page-left"></div>
-                            <div class="page page-right">
-                                <div id="fortuneResult" class="fortune-result hidden">
-                                    <div class="page-ribbon">Oracle Page</div>
-                                    <div class="page-content">
-                                        <p class="page-intro">A fresh page opens with tonight's omen.</p>
-                                        <div class="poem-translation" id="poemTranslation"></div>
-                                        <div class="page-divider"></div>
-                                        <div class="poem-interpretation" id="poemInterpretation"></div>
-                                        <button class="spin-again-btn" id="spinAgainBtn">Open Another Page</button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="page-body">
+                            <p class="page-intro">A fresh illuminated page unfolds to reveal tonight's omen.</p>
+                            <div class="poem-translation" id="poemTranslation"></div>
+                            <div class="page-divider"></div>
+                            <div class="poem-interpretation" id="poemInterpretation"></div>
+                            <button class="spin-again-btn" id="spinAgainBtn">Reveal Another Page</button>
                         </div>
-                        <div class="page-edge"></div>
                     </div>
                 </div>
             </div>

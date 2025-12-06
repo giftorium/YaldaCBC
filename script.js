@@ -66,21 +66,25 @@ const fortunes = [
     }
 ];
 
-const bookState = {
-    isAnimating: false
+const wheelColors = ['#f4d8a4', '#8b1c3a', '#1f5166', '#c2743e'];
+const segmentAngle = (Math.PI * 2) / fortunes.length;
+
+const wheelState = {
+    angle: 0,
+    isSpinning: false,
+    animationId: null
 };
 
 const wheelElements = {
+    canvas: null,
+    ctx: null,
+    spinButton: null,
     wheelWrapper: null,
     ctaButton: null,
-    book: null,
-    openButton: null,
-    openButtonLabel: null,
     result: null,
     translation: null,
     interpretation: null,
-    spinAgainBtn: null,
-    openButtonDefaultText: 'Reveal a Poem'
+    spinAgainBtn: null
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -90,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroParticles();
     initParallaxLayers();
     initSparkleEffects();
+    initPointerPulse();
     console.log('Yalda Night experience ready - may your fortune shine.');
 });
 
@@ -107,100 +112,183 @@ function initNavigation() {
 }
 
 function initFortuneWheel() {
+    wheelElements.canvas = document.getElementById('fortuneWheel');
+    wheelElements.spinButton = document.getElementById('spinButton');
     wheelElements.wheelWrapper = document.getElementById('wheelContainer');
     wheelElements.ctaButton = document.getElementById('getFaalButton');
-    wheelElements.book = document.getElementById('oracleBook');
-    wheelElements.openButton = document.getElementById('openBookButton');
-    wheelElements.openButtonLabel = wheelElements.openButton
-        ? wheelElements.openButton.querySelector('.button-text')
-        : null;
-    if (wheelElements.openButtonLabel && wheelElements.openButtonLabel.textContent.trim()) {
-        wheelElements.openButtonDefaultText = wheelElements.openButtonLabel.textContent.trim();
-    } else if (wheelElements.openButton && wheelElements.openButton.textContent.trim()) {
-        wheelElements.openButtonDefaultText = wheelElements.openButton.textContent.trim();
-    }
     wheelElements.result = document.getElementById('fortuneResult');
     wheelElements.translation = document.getElementById('poemTranslation');
     wheelElements.interpretation = document.getElementById('poemInterpretation');
     wheelElements.spinAgainBtn = document.getElementById('spinAgainBtn');
 
-    if (!wheelElements.book || !wheelElements.openButton) {
+    if (!wheelElements.canvas) {
         return;
     }
+
+    wheelElements.ctx = wheelElements.canvas.getContext('2d');
+    setCanvasSize();
+    drawWheel();
+
+    window.addEventListener('resize', () => {
+        setCanvasSize();
+        drawWheel();
+    });
 
     if (wheelElements.ctaButton && wheelElements.wheelWrapper) {
         wheelElements.ctaButton.addEventListener('click', () => {
             wheelElements.wheelWrapper.style.display = 'flex';
             wheelElements.wheelWrapper.style.opacity = '1';
             wheelElements.wheelWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            if (wheelElements.openButton) {
-                try {
-                    wheelElements.openButton.focus({ preventScroll: true });
-                } catch (error) {
-                    wheelElements.openButton.focus();
-                }
-            }
         });
     }
 
-    wheelElements.openButton.addEventListener('click', revealBookFortune);
+    if (wheelElements.spinButton) {
+        wheelElements.spinButton.addEventListener('click', spinWheel);
+    }
 
     if (wheelElements.spinAgainBtn) {
-        wheelElements.spinAgainBtn.addEventListener('click', prepareNextFortune);
+        wheelElements.spinAgainBtn.addEventListener('click', () => {
+            hideFortuneResult();
+            spinWheel();
+        });
     }
 }
 
-function getRandomFortune() {
-    const index = Math.floor(Math.random() * fortunes.length);
-    return fortunes[index];
+function setCanvasSize() {
+    if (!wheelElements.canvas) {
+        return;
+    }
+    const maxSize = 600;
+    const minSize = 320;
+    const responsiveSize = Math.min(maxSize, window.innerWidth - 80);
+    const size = Math.max(minSize, responsiveSize);
+    wheelElements.canvas.width = size;
+    wheelElements.canvas.height = size;
 }
 
-function revealBookFortune() {
-    if (bookState.isAnimating) {
+function drawWheel() {
+    if (!wheelElements.ctx || !wheelElements.canvas) {
+        return;
+    }
+    const ctx = wheelElements.ctx;
+    const canvas = wheelElements.canvas;
+    const center = canvas.width / 2;
+    const radius = center - 12;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.translate(center, center);
+    ctx.rotate(wheelState.angle);
+
+    fortunes.forEach((fortune, index) => {
+        const startAngle = index * segmentAngle;
+        const endAngle = startAngle + segmentAngle;
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.arc(0, 0, radius, startAngle, endAngle);
+        ctx.closePath();
+        ctx.fillStyle = wheelColors[index % wheelColors.length];
+        ctx.fill();
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.save();
+        ctx.rotate(startAngle + segmentAngle / 2);
+        ctx.fillStyle = '#f8f8f8';
+        ctx.font = '18px "Playfair Display", "Cormorant Garamond", serif';
+        ctx.textAlign = 'right';
+        ctx.fillText(fortune.title, radius - 24, 6);
+        ctx.restore();
+
+        ctx.save();
+        ctx.rotate(startAngle);
+        ctx.beginPath();
+        ctx.moveTo(radius - 18, 0);
+        ctx.lineTo(radius - 4, 0);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.restore();
+    });
+
+    const glow = ctx.createRadialGradient(0, 0, radius * 0.15, 0, 0, radius);
+    glow.addColorStop(0, 'rgba(255, 255, 255, 0.12)');
+    glow.addColorStop(0.6, 'rgba(120, 190, 200, 0.05)');
+    glow.addColorStop(1, 'rgba(0, 0, 0, 0.6)');
+    ctx.beginPath();
+    ctx.arc(0, 0, radius, 0, Math.PI * 2);
+    ctx.fillStyle = glow;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(0, 0, radius - 8, 0, Math.PI * 2);
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 0.25, 0, Math.PI * 2);
+    ctx.fillStyle = '#0f0507';
+    ctx.fill();
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = '#f5f5f5';
+    ctx.stroke();
+
+    ctx.restore();
+}
+
+function spinWheel() {
+    if (!wheelElements.ctx || wheelState.isSpinning) {
         return;
     }
 
-    bookState.isAnimating = true;
-    const fortune = getRandomFortune();
-    showFortuneResult(fortune);
-
-    if (wheelElements.openButton) {
-        wheelElements.openButton.disabled = true;
-    }
-
-    if (wheelElements.openButtonLabel) {
-        wheelElements.openButtonLabel.textContent = 'Page Revealed';
-    } else if (wheelElements.openButton) {
-        wheelElements.openButton.textContent = 'Page Revealed';
-    }
-
-    setTimeout(() => {
-        bookState.isAnimating = false;
-    }, 900);
-}
-
-function prepareNextFortune() {
-    if (bookState.isAnimating) {
-        return;
+    if (wheelElements.wheelWrapper && getComputedStyle(wheelElements.wheelWrapper).display === 'none') {
+        wheelElements.wheelWrapper.style.display = 'flex';
     }
 
     hideFortuneResult();
+    wheelState.isSpinning = true;
 
-    if (wheelElements.openButton) {
-        wheelElements.openButton.disabled = false;
-        try {
-            wheelElements.openButton.focus({ preventScroll: true });
-        } catch (error) {
-            wheelElements.openButton.focus();
+    if (wheelElements.spinButton) {
+        wheelElements.spinButton.disabled = true;
+    }
+
+    const spinAmount = Math.PI * 6 + Math.random() * (Math.PI * 2);
+    const duration = 4200;
+    const start = performance.now();
+    const initialAngle = wheelState.angle;
+
+    function animate(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = easeOutCubic(progress);
+        wheelState.angle = initialAngle + spinAmount * eased;
+        drawWheel();
+
+        if (progress < 1) {
+            wheelState.animationId = requestAnimationFrame(animate);
+        } else {
+            finishSpin();
         }
     }
 
-    const defaultText = wheelElements.openButtonDefaultText || 'Reveal a Poem';
-    if (wheelElements.openButtonLabel) {
-        wheelElements.openButtonLabel.textContent = defaultText;
-    } else if (wheelElements.openButton) {
-        wheelElements.openButton.textContent = defaultText;
+    wheelState.animationId = requestAnimationFrame(animate);
+}
+
+function finishSpin() {
+    wheelState.isSpinning = false;
+    if (wheelElements.spinButton) {
+        wheelElements.spinButton.disabled = false;
     }
+
+    const normalizedAngle = (2 * Math.PI - (wheelState.angle % (2 * Math.PI))) % (2 * Math.PI);
+    const rawIndex = Math.floor(normalizedAngle / segmentAngle);
+    const segmentIndex = ((rawIndex % fortunes.length) + fortunes.length) % fortunes.length;
+    const selectedFortune = fortunes[segmentIndex];
+    showFortuneResult(selectedFortune);
 }
 
 function showFortuneResult(fortune) {
@@ -213,12 +301,6 @@ function showFortuneResult(fortune) {
 
     wheelElements.result.classList.remove('hidden');
     wheelElements.result.classList.add('visible');
-    if (wheelElements.wheelWrapper) {
-        wheelElements.wheelWrapper.classList.add('book-open');
-    }
-    if (wheelElements.book) {
-        wheelElements.book.classList.add('is-open');
-    }
     wheelElements.result.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
@@ -227,12 +309,10 @@ function hideFortuneResult() {
         wheelElements.result.classList.add('hidden');
         wheelElements.result.classList.remove('visible');
     }
-    if (wheelElements.wheelWrapper) {
-        wheelElements.wheelWrapper.classList.remove('book-open');
-    }
-    if (wheelElements.book) {
-        wheelElements.book.classList.remove('is-open');
-    }
+}
+
+function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
 }
 
 function initScrollAnimations() {
@@ -343,3 +423,11 @@ function createSparkles(element) {
     }
 }
 
+function initPointerPulse() {
+    const pointer = document.querySelector('.wheel-pointer');
+    if (!pointer) {
+        return;
+    }
+
+    pointer.style.animation = 'pulse 3s ease-in-out infinite';
+}
