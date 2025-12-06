@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Celebrate Yalda Night - Experience the 7,000-year Persian winter solstice tradition with Hafez poetry fortune wheel and cultural knowledge quiz">
     <meta name="keywords" content="Yalda Night, Shab-e Yalda, Persian Culture, Hafez Poetry, Winter Solstice">
-    <title>Yalda Night Celebration - شب یلدا مبارک</title>
+    <title>Yalda Night Celebration</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,14 +47,12 @@
             <div class="header-content">
                 <h1 class="site-title">
                     <span class="title-en">Yalda Night</span>
-                    <span class="title-fa">شب یلدا</span>
                 </h1>
                 <p class="subtitle">Celebrating the Longest Night of the Year</p>
             </div>
             <nav class="main-nav">
                 <button class="nav-btn" data-section="about">About Yalda</button>
                 <button class="nav-btn" data-section="wheel">Fortune Wheel</button>
-                <button class="nav-btn" data-section="quiz">Knowledge Quiz</button>
             </nav>
         </div>
     </header>
@@ -77,10 +75,10 @@
                         the triumph of light over darkness on the winter solstice.
                     </p>
                     <div class="hero-symbols">
-                        <span class="symbol">🍎 Pomegranate</span>
-                        <span class="symbol">🍉 Watermelon</span>
-                        <span class="symbol">📖 Hafez Poetry</span>
-                        <span class="symbol">🕯️ Candles</span>
+                        <span class="symbol"><span class="icon icon-ring" aria-hidden="true"></span>Pomegranate Rituals</span>
+                        <span class="symbol"><span class="icon icon-line" aria-hidden="true"></span>Winter Gatherings</span>
+                        <span class="symbol"><span class="icon icon-leaf" aria-hidden="true"></span>Hafez Poetry</span>
+                        <span class="symbol"><span class="icon icon-ray" aria-hidden="true"></span>Candlelight Vigil</span>
                     </div>
                 </div>
             </div>
@@ -116,13 +114,13 @@
                 <p class="story-lead">
                     Close your eyes and imagine the longest night of the year. A night so ancient, 
                     it whispers secrets from 7,000 years ago. This is <strong>Yalda Night</strong> 
-                    — شب یلدا — where darkness dances with light, and poetry awakens the soul.
+                    — Shab-e Yalda — where darkness dances with light, and poetry awakens the soul.
                 </p>
             </div>
             
             <div class="about-grid">
                 <div class="about-card story-card">
-                    <div class="card-icon">🌑</div>
+                    <div class="card-icon"><span class="icon icon-moon" aria-hidden="true"></span></div>
                     <h3>What is Yalda?</h3>
                     <p>
                         Picture the winter solstice — December 21st, the longest and darkest night of the year. 
@@ -135,7 +133,7 @@
                 </div>
 
                 <div class="about-card story-card">
-                    <div class="card-icon">🍎</div>
+                    <div class="card-icon"><span class="icon icon-seed" aria-hidden="true"></span></div>
                     <h3>The Sacred Pomegranate</h3>
                     <p>
                         Imagine splitting open a pomegranate — each ruby-red seed glistens like a tiny jewel, 
@@ -148,7 +146,7 @@
                 </div>
 
                 <div class="about-card story-card">
-                    <div class="card-icon">📜</div>
+                    <div class="card-icon"><span class="icon icon-scroll" aria-hidden="true"></span></div>
                     <h3>Enter Hafez: The Poet of Hearts</h3>
                     <p>
                         Now, let me introduce you to a man who lived 700 years ago but speaks to your soul today. 
@@ -161,7 +159,7 @@
                 </div>
 
                 <div class="about-card story-card">
-                    <div class="card-icon">✨</div>
+                    <div class="card-icon"><span class="icon icon-star" aria-hidden="true"></span></div>
                     <h3>The Magic of Fāl-e Hafez</h3>
                     <p>
                         Here's where mystery meets tradition: On Yalda night, after hours of storytelling and 
@@ -174,7 +172,7 @@
                 </div>
 
                 <div class="about-card story-card">
-                    <div class="card-icon">🕯️</div>
+                    <div class="card-icon"><span class="icon icon-flame" aria-hidden="true"></span></div>
                     <h3>The Vigil of Light</h3>
                     <p>
                         As candles flicker and cast dancing shadows, families gather in a circle. Elders tell 
@@ -187,7 +185,7 @@
                 </div>
 
                 <div class="about-card story-card">
-                    <div class="card-icon">💫</div>
+                    <div class="card-icon"><span class="icon icon-orbit" aria-hidden="true"></span></div>
                     <h3>Why It Matters Today</h3>
                     <p>
                         In our modern world of electric lights and heated homes, why does Yalda still matter? 
@@ -225,9 +223,8 @@
                 <div class="fortune-cta">
                     <p class="cta-description">Ready to receive your divine guidance from Hafez?</p>
                     <button id="getFaalButton" class="get-faal-button">
-                        <span class="cta-icon">📖</span>
+                        <span class="cta-icon"><span class="icon icon-scroll" aria-hidden="true"></span></span>
                         <span class="cta-text">Get My Fāl-e Hafez</span>
-                        <span class="cta-subtext">دریافت فال</span>
                     </button>
                 </div>
                 
@@ -236,7 +233,6 @@
                     <canvas id="fortuneWheel" width="600" height="600"></canvas>
                     <button id="spinButton" class="spin-button">
                         <span class="button-text">Spin the Wheel</span>
-                        <span class="button-subtext">دریافت فال حافظ</span>
                     </button>
                 </div>
                 
@@ -247,107 +243,12 @@
                             <span class="result-close">&times;</span>
                         </div>
                         <div class="result-content">
-                            <div class="poem-farsi" id="poemFarsi"></div>
                             <div class="poem-translation" id="poemTranslation"></div>
                             <div class="poem-interpretation" id="poemInterpretation"></div>
                         </div>
                         <button class="spin-again-btn" id="spinAgainBtn">Spin Again</button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Quiz Section -->
-    <section id="quiz" class="content-section quiz-section">
-        <div class="quiz-background-image"></div>
-        <div class="container">
-            <div class="section-header">
-                <svg class="section-ornament" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10,20 Q30,10 50,20 T90,20" stroke="#D4AF37" stroke-width="2" fill="none"/>
-                    <path d="M110,20 Q130,10 150,20 T190,20" stroke="#D4AF37" stroke-width="2" fill="none"/>
-                    <circle cx="100" cy="20" r="8" fill="#C41E3A" stroke="#D4AF37" stroke-width="2"/>
-                    <circle cx="100" cy="20" r="3" fill="#D4AF37"/>
-                </svg>
-                <h2 class="section-title">Yalda Knowledge Challenge</h2>
-                <div class="title-decoration"></div>
-                <p class="section-description">
-                    Test your knowledge about Yalda Night traditions and Persian culture
-                </p>
-            </div>
-
-            <div class="quiz-container">
-                <!-- Quiz Start Screen -->
-                <div id="quizStart" class="quiz-screen">
-                    <div class="quiz-intro">
-                        <div class="quiz-icon">🎓</div>
-                        <h3>Ready to Test Your Knowledge?</h3>
-                        <div class="name-input-container">
-                            <label for="participantName" class="name-label">Enter Your Name:</label>
-                            <input type="text" id="participantName" class="name-input" placeholder="Your full name" required>
-                        </div>
-                        <ul class="quiz-rules">
-                            <li>10 questions about Yalda Night and Persian culture</li>
-                            <li>2.5 minutes (150 seconds) to complete</li>
-                            <li>Instant feedback with explanations</li>
-                            <li>Score 8+ to earn your certificate!</li>
-                            <li>Your results will be automatically sent to our admin</li>
-                        </ul>
-                        <button id="startQuizBtn" class="quiz-button">Start Challenge</button>
-                    </div>
-                </div>
-
-                <!-- Quiz Game Screen -->
-                <div id="quizGame" class="quiz-screen hidden">
-                    <div class="quiz-header">
-                        <div class="quiz-progress">
-                            Question <span id="currentQuestion">1</span> of 10
-                        </div>
-                        <div class="quiz-timer">
-                            <span class="timer-icon">⏱️</span>
-                            <span id="timerDisplay">2:30</span>
-                        </div>
-                        <div class="quiz-score">
-                            Score: <span id="currentScore">0</span>
-                        </div>
-                    </div>
-
-                    <div class="question-container">
-                        <h3 id="questionText" class="question-text"></h3>
-                        <div id="answersContainer" class="answers-container"></div>
-                    </div>
-
-                    <div id="feedbackContainer" class="feedback-container hidden">
-                        <div class="feedback-content">
-                            <p class="feedback-message"></p>
-                            <p class="feedback-explanation"></p>
-                            <button id="nextQuestionBtn" class="quiz-button">Next Question</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quiz Results Screen -->
-                <div id="quizResults" class="quiz-screen hidden">
-                    <div class="results-container">
-                        <div id="resultsContent"></div>
-                        <button id="retakeQuizBtn" class="quiz-button">Take Quiz Again</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Admin-Only Leaderboard Section (Hidden from Public) -->
-            <div class="leaderboard-section admin-only" id="leaderboardSection" style="display: none;">
-                <h3 class="leaderboard-title">🏆 Admin Panel - Quiz Results 🏆</h3>
-                <div class="admin-password-section" id="adminPasswordSection">
-                    <p style="color: var(--cream); margin-bottom: 1rem;">Enter admin password to view results:</p>
-                    <input type="password" id="adminPassword" placeholder="Admin Password" style="padding: 0.8rem; border-radius: 8px; border: 2px solid var(--gold); background: rgba(139, 21, 56, 0.3); color: var(--cream); font-size: 1rem; margin-right: 0.5rem;">
-                    <button id="adminLoginBtn" class="quiz-button" style="padding: 0.8rem 2rem;">Access</button>
-                </div>
-                <div class="leaderboard-controls" id="adminControls" style="display: none;">
-                    <button id="showLeaderboardBtn" class="quiz-button">View All Results</button>
-                    <button id="downloadLeaderboardBtn" class="quiz-button secondary-btn">📊 Download CSV</button>
-                </div>
-                <div id="leaderboardDisplay" class="leaderboard-display" style="display: none;"></div>
             </div>
         </div>
     </section>
@@ -377,19 +278,19 @@
                 
                 <div class="contact-cards">
                     <div class="contact-card">
-                        <div class="contact-icon">🎭</div>
+                        <div class="contact-icon"><span class="icon icon-mask" aria-hidden="true"></span></div>
                         <h3>Cultural Workshops</h3>
                         <p>Interactive presentations about Persian traditions, Yalda Night celebrations, and Hafez poetry</p>
                     </div>
                     
                     <div class="contact-card">
-                        <div class="contact-icon">💼</div>
+                        <div class="contact-icon"><span class="icon icon-brief" aria-hidden="true"></span></div>
                         <h3>Corporate Events</h3>
                         <p>Custom cultural experiences for team building and diversity celebrations</p>
                     </div>
                     
                     <div class="contact-card">
-                        <div class="contact-icon">🌐</div>
+                        <div class="contact-icon"><span class="icon icon-globe" aria-hidden="true"></span></div>
                         <h3>Educational Programs</h3>
                         <p>School and university programs introducing Persian culture and history</p>
                     </div>
@@ -430,7 +331,6 @@
                 </div>
                 <div class="footer-section">
                     <h4>Yalda Blessings</h4>
-                    <p class="persian-text">شب یلدا مبارک</p>
                     <p>Wishing you a blessed Yalda Night filled with love, light, and poetry.</p>
                 </div>
             </div>
