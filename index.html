@@ -228,26 +228,37 @@
                     </button>
                 </div>
                 
-                <div class="wheel-wrapper" id="wheelContainer" style="display: none;">
-                    <div class="wheel-pointer"></div>
-                    <canvas id="fortuneWheel" width="600" height="600"></canvas>
-                    <button id="spinButton" class="spin-button">
-                        <span class="button-text">Reveal a Poem Page</span>
-                    </button>
-                </div>
-                
-                <div id="fortuneResult" class="fortune-result hidden">
-                    <div class="poem-page">
-                        <div class="page-tabs">
-                            <span class="page-tab">Divan Folio</span>
-                            <span class="page-tab">Night of Light</span>
+                <div class="fortune-stage" id="fortuneStage" style="display: none;">
+                    <div class="fortune-console">
+                        <div class="console-lights">
+                            <span></span>
+                            <span></span>
+                            <span></span>
                         </div>
-                        <div class="page-body">
-                            <p class="page-intro">A fresh illuminated page unfolds to reveal tonight's omen.</p>
-                            <div class="poem-translation" id="poemTranslation"></div>
-                            <div class="page-divider"></div>
-                            <div class="poem-interpretation" id="poemInterpretation"></div>
-                            <button class="spin-again-btn" id="spinAgainBtn">Reveal Another Page</button>
+                        <h3 class="console-title">Divan Selector</h3>
+                        <p class="console-description">Press the button to draw a random illuminated page from Hafez.</p>
+                        <div class="console-core">
+                            <div class="console-indicator" id="consoleIndicator"></div>
+                            <button id="revealButton" class="reveal-button">
+                                <span class="button-text">Reveal a Poem Page</span>
+                            </button>
+                        </div>
+                        <p class="console-footnote">Each reveal offers a unique omen. Share it with your circle.</p>
+                    </div>
+
+                    <div id="fortuneResult" class="fortune-result hidden">
+                        <div class="poem-page">
+                            <div class="page-tabs">
+                                <span class="page-tab">Divan Folio</span>
+                                <span class="page-tab">Night of Light</span>
+                            </div>
+                            <div class="page-body">
+                                <p class="page-intro">A stark page glows beneath candlelight to unveil your omen.</p>
+                                <div class="poem-translation" id="poemTranslation"></div>
+                                <div class="page-divider"></div>
+                                <div class="poem-interpretation" id="poemInterpretation"></div>
+                                <button class="spin-again-btn" id="spinAgainBtn">Reveal Another Page</button>
+                            </div>
                         </div>
                     </div>
                 </div>

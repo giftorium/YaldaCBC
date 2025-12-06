@@ -66,30 +66,25 @@ const fortunes = [
     }
 ];
 
-const wheelColors = ['#f4d8a4', '#8b1c3a', '#1f5166', '#c2743e'];
-const segmentAngle = (Math.PI * 2) / fortunes.length;
-
-const wheelState = {
-    angle: 0,
-    isSpinning: false,
-    animationId: null
+const fortuneState = {
+    isRevealing: false,
+    revealDefaultText: ''
 };
 
-const wheelElements = {
-    canvas: null,
-    ctx: null,
-    spinButton: null,
-    wheelWrapper: null,
+const fortuneElements = {
     ctaButton: null,
+    stage: null,
+    revealButton: null,
     result: null,
     translation: null,
     interpretation: null,
-    spinAgainBtn: null
+    spinAgainBtn: null,
+    indicator: null
 };
 
 document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
-    initFortuneWheel();
+    initFortuneConsole();
     initScrollAnimations();
     initHeroParticles();
     initParallaxLayers();
@@ -111,208 +106,103 @@ function initNavigation() {
     });
 }
 
-function initFortuneWheel() {
-    wheelElements.canvas = document.getElementById('fortuneWheel');
-    wheelElements.spinButton = document.getElementById('spinButton');
-    wheelElements.wheelWrapper = document.getElementById('wheelContainer');
-    wheelElements.ctaButton = document.getElementById('getFaalButton');
-    wheelElements.result = document.getElementById('fortuneResult');
-    wheelElements.translation = document.getElementById('poemTranslation');
-    wheelElements.interpretation = document.getElementById('poemInterpretation');
-    wheelElements.spinAgainBtn = document.getElementById('spinAgainBtn');
+function initFortuneConsole() {
+    fortuneElements.ctaButton = document.getElementById('getFaalButton');
+    fortuneElements.stage = document.getElementById('fortuneStage');
+    fortuneElements.revealButton = document.getElementById('revealButton');
+    fortuneElements.result = document.getElementById('fortuneResult');
+    fortuneElements.translation = document.getElementById('poemTranslation');
+    fortuneElements.interpretation = document.getElementById('poemInterpretation');
+    fortuneElements.spinAgainBtn = document.getElementById('spinAgainBtn');
+    fortuneElements.indicator = document.getElementById('consoleIndicator');
 
-    if (!wheelElements.canvas) {
+    if (!fortuneElements.ctaButton || !fortuneElements.stage || !fortuneElements.revealButton) {
         return;
     }
 
-    wheelElements.ctx = wheelElements.canvas.getContext('2d');
-    setCanvasSize();
-    drawWheel();
+    const labelTarget = fortuneElements.revealButton.querySelector('.button-text');
+    fortuneState.revealDefaultText = labelTarget
+        ? labelTarget.textContent.trim()
+        : fortuneElements.revealButton.textContent.trim();
 
-    window.addEventListener('resize', () => {
-        setCanvasSize();
-        drawWheel();
+    fortuneElements.ctaButton.addEventListener('click', () => {
+        fortuneElements.stage.style.display = 'grid';
+        fortuneElements.stage.style.opacity = '1';
+        fortuneElements.stage.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
-    if (wheelElements.ctaButton && wheelElements.wheelWrapper) {
-        wheelElements.ctaButton.addEventListener('click', () => {
-            wheelElements.wheelWrapper.style.display = 'flex';
-            wheelElements.wheelWrapper.style.opacity = '1';
-            wheelElements.wheelWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-    }
+    fortuneElements.revealButton.addEventListener('click', revealFortune);
 
-    if (wheelElements.spinButton) {
-        wheelElements.spinButton.addEventListener('click', spinWheel);
-    }
-
-    if (wheelElements.spinAgainBtn) {
-        wheelElements.spinAgainBtn.addEventListener('click', () => {
-            hideFortuneResult();
-            spinWheel();
-        });
+    if (fortuneElements.spinAgainBtn) {
+        fortuneElements.spinAgainBtn.addEventListener('click', revealFortune);
     }
 }
 
-function setCanvasSize() {
-    if (!wheelElements.canvas) {
-        return;
-    }
-    const maxSize = 600;
-    const minSize = 320;
-    const responsiveSize = Math.min(maxSize, window.innerWidth - 80);
-    const size = Math.max(minSize, responsiveSize);
-    wheelElements.canvas.width = size;
-    wheelElements.canvas.height = size;
-}
-
-function drawWheel() {
-    if (!wheelElements.ctx || !wheelElements.canvas) {
-        return;
-    }
-    const ctx = wheelElements.ctx;
-    const canvas = wheelElements.canvas;
-    const center = canvas.width / 2;
-    const radius = center - 12;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.save();
-    ctx.translate(center, center);
-    ctx.rotate(wheelState.angle);
-
-    fortunes.forEach((fortune, index) => {
-        const startAngle = index * segmentAngle;
-        const endAngle = startAngle + segmentAngle;
-
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.arc(0, 0, radius, startAngle, endAngle);
-        ctx.closePath();
-        ctx.fillStyle = wheelColors[index % wheelColors.length];
-        ctx.fill();
-
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        ctx.save();
-        ctx.rotate(startAngle + segmentAngle / 2);
-        ctx.fillStyle = '#f8f8f8';
-        ctx.font = '18px "Playfair Display", "Cormorant Garamond", serif';
-        ctx.textAlign = 'right';
-        ctx.fillText(fortune.title, radius - 24, 6);
-        ctx.restore();
-
-        ctx.save();
-        ctx.rotate(startAngle);
-        ctx.beginPath();
-        ctx.moveTo(radius - 18, 0);
-        ctx.lineTo(radius - 4, 0);
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        ctx.restore();
-    });
-
-    const glow = ctx.createRadialGradient(0, 0, radius * 0.15, 0, 0, radius);
-    glow.addColorStop(0, 'rgba(255, 255, 255, 0.12)');
-    glow.addColorStop(0.6, 'rgba(120, 190, 200, 0.05)');
-    glow.addColorStop(1, 'rgba(0, 0, 0, 0.6)');
-    ctx.beginPath();
-    ctx.arc(0, 0, radius, 0, Math.PI * 2);
-    ctx.fillStyle = glow;
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.arc(0, 0, radius - 8, 0, Math.PI * 2);
-    ctx.lineWidth = 4;
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.arc(0, 0, radius * 0.25, 0, Math.PI * 2);
-    ctx.fillStyle = '#0f0507';
-    ctx.fill();
-    ctx.lineWidth = 4;
-    ctx.strokeStyle = '#f5f5f5';
-    ctx.stroke();
-
-    ctx.restore();
-}
-
-function spinWheel() {
-    if (!wheelElements.ctx || wheelState.isSpinning) {
+function revealFortune() {
+    if (!fortuneElements.revealButton || fortuneState.isRevealing) {
         return;
     }
 
-    if (wheelElements.wheelWrapper && getComputedStyle(wheelElements.wheelWrapper).display === 'none') {
-        wheelElements.wheelWrapper.style.display = 'flex';
-    }
-
+    fortuneState.isRevealing = true;
+    setRevealButtonState(true);
     hideFortuneResult();
-    wheelState.isSpinning = true;
 
-    if (wheelElements.spinButton) {
-        wheelElements.spinButton.disabled = true;
+    if (fortuneElements.indicator) {
+        fortuneElements.indicator.classList.add('active');
     }
 
-    const spinAmount = Math.PI * 6 + Math.random() * (Math.PI * 2);
-    const duration = 4200;
-    const start = performance.now();
-    const initialAngle = wheelState.angle;
+    const revealDelay = 1400 + Math.random() * 600;
+    setTimeout(() => {
+        const selectedFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+        showFortuneResult(selectedFortune);
 
-    function animate(now) {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = easeOutCubic(progress);
-        wheelState.angle = initialAngle + spinAmount * eased;
-        drawWheel();
-
-        if (progress < 1) {
-            wheelState.animationId = requestAnimationFrame(animate);
-        } else {
-            finishSpin();
+        if (fortuneElements.indicator) {
+            fortuneElements.indicator.classList.remove('active');
         }
-    }
 
-    wheelState.animationId = requestAnimationFrame(animate);
-}
-
-function finishSpin() {
-    wheelState.isSpinning = false;
-    if (wheelElements.spinButton) {
-        wheelElements.spinButton.disabled = false;
-    }
-
-    const normalizedAngle = (2 * Math.PI - (wheelState.angle % (2 * Math.PI))) % (2 * Math.PI);
-    const rawIndex = Math.floor(normalizedAngle / segmentAngle);
-    const segmentIndex = ((rawIndex % fortunes.length) + fortunes.length) % fortunes.length;
-    const selectedFortune = fortunes[segmentIndex];
-    showFortuneResult(selectedFortune);
+        setRevealButtonState(false);
+        fortuneState.isRevealing = false;
+    }, revealDelay);
 }
 
 function showFortuneResult(fortune) {
-    if (!wheelElements.result || !wheelElements.translation || !wheelElements.interpretation) {
+    if (!fortuneElements.result || !fortuneElements.translation || !fortuneElements.interpretation) {
         return;
     }
 
-    wheelElements.translation.innerHTML = fortune.translation.replace(/\n/g, '<br>');
-    wheelElements.interpretation.textContent = fortune.interpretation;
+    fortuneElements.translation.innerHTML = fortune.translation.replace(/\n/g, '<br>');
+    fortuneElements.interpretation.textContent = fortune.interpretation;
 
-    wheelElements.result.classList.remove('hidden');
-    wheelElements.result.classList.add('visible');
-    wheelElements.result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    fortuneElements.result.classList.remove('hidden');
+    fortuneElements.result.classList.add('visible');
+    fortuneElements.result.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function hideFortuneResult() {
-    if (wheelElements.result) {
-        wheelElements.result.classList.add('hidden');
-        wheelElements.result.classList.remove('visible');
+    if (!fortuneElements.result) {
+        return;
     }
+    fortuneElements.result.classList.add('hidden');
+    fortuneElements.result.classList.remove('visible');
 }
 
-function easeOutCubic(t) {
-    return 1 - Math.pow(1 - t, 3);
+function setRevealButtonState(isLoading) {
+    if (!fortuneElements.revealButton) {
+        return;
+    }
+
+    fortuneElements.revealButton.disabled = isLoading;
+
+    if (fortuneElements.spinAgainBtn) {
+        fortuneElements.spinAgainBtn.disabled = isLoading;
+    }
+
+    const labelTarget = fortuneElements.revealButton.querySelector('.button-text') || fortuneElements.revealButton;
+    if (isLoading) {
+        labelTarget.textContent = 'Consulting Hafez...';
+    } else {
+        labelTarget.textContent = fortuneState.revealDefaultText;
+    }
 }
 
 function initScrollAnimations() {
