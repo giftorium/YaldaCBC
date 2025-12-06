@@ -224,29 +224,32 @@
                     <p class="cta-description">Ready to receive your divine guidance from Hafez?</p>
                     <button id="getFaalButton" class="get-faal-button">
                         <span class="cta-icon"><span class="icon icon-scroll" aria-hidden="true"></span></span>
-                        <span class="cta-text">Get My Fāl-e Hafez</span>
+                        <span class="cta-text">Open the Divan</span>
                     </button>
                 </div>
                 
-                <div class="wheel-wrapper" id="wheelContainer" style="display: none;">
-                    <div class="wheel-pointer"></div>
-                    <canvas id="fortuneWheel" width="600" height="600"></canvas>
-                    <button id="spinButton" class="spin-button">
-                        <span class="button-text">Spin the Wheel</span>
-                    </button>
-                </div>
-                
-                <div id="fortuneResult" class="fortune-result hidden">
-                    <div class="result-card">
-                        <div class="result-header">
-                            <h3>Your Message from Hafez</h3>
-                            <span class="result-close">&times;</span>
+                <div class="book-stage" id="wheelContainer" style="display: none;">
+                    <div class="book-cover">
+                        <div class="book-spine"></div>
+                        <div class="book-face">
+                            <p class="book-title">Divan of Hafez</p>
+                            <div class="wheel-pointer"></div>
+                            <canvas id="fortuneWheel" width="600" height="600"></canvas>
+                            <button id="spinButton" class="spin-button">
+                                <span class="button-text">Spin the Wheel</span>
+                            </button>
                         </div>
-                        <div class="result-content">
+                    </div>
+                    
+                    <div id="fortuneResult" class="fortune-result hidden">
+                        <div class="page-ribbon">Oracle Page</div>
+                        <div class="page-content">
+                            <p class="page-intro">A fresh page opens with tonight's omen.</p>
                             <div class="poem-translation" id="poemTranslation"></div>
+                            <div class="page-divider"></div>
                             <div class="poem-interpretation" id="poemInterpretation"></div>
+                            <button class="spin-again-btn" id="spinAgainBtn">Ask Again</button>
                         </div>
-                        <button class="spin-again-btn" id="spinAgainBtn">Spin Again</button>
                     </div>
                 </div>
             </div>

@@ -266,7 +266,8 @@ function finishSpin() {
     }
 
     const normalizedAngle = (2 * Math.PI - (wheelState.angle % (2 * Math.PI))) % (2 * Math.PI);
-    const segmentIndex = Math.floor(normalizedAngle / segmentAngle) % fortunes.length;
+    const rawIndex = Math.floor(normalizedAngle / segmentAngle);
+    const segmentIndex = ((rawIndex % fortunes.length) + fortunes.length) % fortunes.length;
     const selectedFortune = fortunes[segmentIndex];
     showFortuneResult(selectedFortune);
 }
@@ -281,6 +282,9 @@ function showFortuneResult(fortune) {
 
     wheelElements.result.classList.remove('hidden');
     wheelElements.result.classList.add('visible');
+    if (wheelElements.wheelWrapper) {
+        wheelElements.wheelWrapper.classList.add('book-open');
+    }
     wheelElements.result.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
@@ -288,6 +292,9 @@ function hideFortuneResult() {
     if (wheelElements.result) {
         wheelElements.result.classList.add('hidden');
         wheelElements.result.classList.remove('visible');
+    }
+    if (wheelElements.wheelWrapper) {
+        wheelElements.wheelWrapper.classList.remove('book-open');
     }
 }
 
