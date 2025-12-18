@@ -42,9 +42,9 @@
     --spacing-xl: 4rem;
     
     /* Typography */
-    --font-display: 'Playfair Display', serif;
-    --font-body: 'Cormorant Garamond', serif;
-    --font-accent: 'Crimson Text', serif;
+    --font-display: 'Spectral', serif;
+    --font-body: 'Source Sans 3', sans-serif;
+    --font-accent: 'Spectral', serif;
 }
 
 /* ========================================
@@ -65,7 +65,8 @@ body {
     font-family: var(--font-body);
     background: var(--ink);
     color: var(--cream);
-    line-height: 1.7;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
     overflow-x: hidden;
     position: relative;
 }
@@ -101,6 +102,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
     margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.85);
 }
 
 /* ========================================
@@ -167,6 +169,7 @@ p {
     letter-spacing: 1px;
 }
 
+
 /* ========================================
    NAVIGATION
    ======================================== */
@@ -187,9 +190,12 @@ p {
     transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
     gap: 0.25rem;
     min-width: 220px;
+    min-height: 110px;
+    text-align: center;
     color: var(--cream);
 }
 
@@ -215,14 +221,16 @@ p {
 }
 
 .nav-btn--story {
-    background: rgba(212, 175, 55, 0.12);
-    border-color: rgba(212, 175, 55, 0.5);
+    background: linear-gradient(150deg, rgba(212, 175, 55, 0.3), rgba(18, 18, 18, 0.9));
+    border-color: rgba(212, 175, 55, 0.7);
     color: var(--persian-gold);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.25);
 }
 
 .nav-btn--fortune {
-    background: rgba(193, 18, 31, 0.2);
-    border-color: rgba(193, 18, 31, 0.65);
+    background: linear-gradient(150deg, rgba(193, 18, 31, 0.4), rgba(5, 5, 5, 0.85));
+    border-color: rgba(193, 18, 31, 0.75);
+    box-shadow: 0 12px 30px rgba(193, 18, 31, 0.3);
 }
 
 .nav-btn--story .nav-btn-label {
@@ -753,13 +761,26 @@ p {
     color: var(--antique-gold);
 }
 
-.copyright-mahya {
+.client-badge {
+    margin: 0.5rem auto 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.client-badge img {
+    height: 28px;
+    width: auto;
+    display: block;
+}
+
+.dev-credit {
     margin-top: 0.5rem;
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    color: var(--persian-gold);
-    font-weight: 600;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.75);
 }
 
 /* ========================================
