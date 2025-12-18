@@ -36,10 +36,10 @@
     "faal": "Lead with humility and courage at the same time. Aligning with a higher ethic gives you both authority and safety."
   },
   {
-    "title": "Secret Gallery",
-    "persian": "به تماشاگه راز آمد و آیینه به دست\nکه به هر جا نظر انداخت جز تو ندید",
-    "translation": "He entered the gallery of secrets with a mirror in hand;\nWherever he gazed he saw nothing but you.",
-    "faal": "Clear away distractions. Reflection will show that the answer you seek has been present in every scene."
+    "title": "Moonlit Promise",
+    "persian": "رسید مژده که ایام غم نخواهد ماند\nچنان نماند چنین نیز هم نخواهد ماند",
+    "translation": "Glad tidings came that the days of sorrow will not remain;\nAs it once was not, so even this will not remain.",
+    "faal": "This chapter is ending. Keep your rituals steady and let hope make actual plans for the better days approaching."
   },
   {
     "title": "Scatter Blossoms",
@@ -102,21 +102,75 @@
     "faal": "Guidance may sound unfamiliar. Suspend judgment and learn the dialect of intuition before deciding."
   },
   {
-    "title": "Fragrant Crossing",
-    "persian": "صبا اگر گذرت بر دیار یار فتد\nزبان حال مرا بازگوی یار نزد",
-    "translation": "Breeze, if your path passes through the beloved's land,\nSpeak the language of my state when you stand before that friend.",
-    "faal": "Allies can carry your intentions farther than you can alone. Share your prayer with a trusted messenger."
+    "title": "Saffron Breeze",
+    "persian": "نفس باد صبا مشک فشان خواهد شد\nعالم پیر دگر باره جوان خواهد شد",
+    "translation": "The breath of the dawn breeze will scatter musk;\nThe old world will once again turn young.",
+    "faal": "Fresh energy is arriving. Open windows, refresh your space, and be ready to step into rejuvenated momentum."
   },
   {
-    "title": "Guiding Star",
-    "persian": "در این شب سیاه گم شد راه مقصود\nاز گوشه ای برون آی ای کوکب هدایت",
-    "translation": "In this black night the road to my aim is lost;\nRise from some corner, O guiding star of direction.",
-    "faal": "Ask openly for guidance. A mentor or sign will appear as soon as you admit you cannot see the path."
+    "title": "Dawn Deliverance",
+    "persian": "دوش وقت سحر از غصه نجاتم دادند\nو اندر آن ظلمت شب آب حیاتم دادند",
+    "translation": "At the break of last night they freed me from sorrow;\nIn that darkness they handed me the water of life.",
+    "faal": "Relief comes when you rise before dawn with honesty. Pour out your worries, then accept the quiet solution being offered."
   },
   {
     "title": "Tear-Stained Eyes",
     "persian": "ز گریه مردم چشمم نشسته در خون است\nببین که در طلبت حال مردمان چون است",
     "translation": "From endless weeping, the people of my eyes are seated in blood;\nSee what becomes of lovers who keep searching for you.",
     "faal": "Emotion is not weakness. Let your sincerity show, but also soothe yourself with rest and trusted company."
+  },
+  {
+    "title": "Scarlet Pledge",
+    "persian": "گر چه ما بندگان پادشهیم\nپادشاهان ملک صبحگهیم",
+    "translation": "Though we appear as servants to the sovereign,\nWe are the kings of dawn's domain.",
+    "faal": "Remember your sovereignty. Serve with grace, but do not surrender the authority of your inner light."
+  },
+  {
+    "title": "Emerald Lattice",
+    "persian": "بیا که ترک فلک خوان روزه غارت کرد\nهلال عید به دور قدح اشارت کرد",
+    "translation": "Come, for the heavens have broken their fast of abstinence;\nThe crescent of Eid just pointed toward the wine cup.",
+    "faal": "A celebration beckons. Say yes to the invitation and let community refill your empty cup."
+  },
+  {
+    "title": "Hidden Orchard",
+    "persian": "به باغ تازه کن ای بلبل آشفتگی\nکه گل نهان شده در پردهٔ حیا امروز",
+    "translation": "Refresh the garden, O restless nightingale;\nThe shy blossom hides today behind a veil of modesty.",
+    "faal": "Gentle attention will coax a shy opportunity forward. Patience and beauty go hand in hand."
+  },
+  {
+    "title": "Amber Lullaby",
+    "persian": "دلا بسوز که سوز تو کارها بکند\nنیهال خشک شبی خوشهٔ تر انجارد",
+    "translation": "O heart, burn—your burning accomplishes wonders;\nEven a dry sapling can bear fresh fruit in one night.",
+    "faal": "Your passion still holds power. Apply it wisely and expect tangible change, even where hope felt gone."
+  },
+  {
+    "title": "Celestial Caravan",
+    "persian": "فلک به مردم نادان دهد زمام مراد\nتو اهل فضلی و دانش همین گناهت بس",
+    "translation": "Fate hands the reins of desire to the ignorant crowd;\nYou are all merit and knowledge—alas, that alone counts as your fault.",
+    "faal": "Stop waiting for fairness. Chart your own caravan and let wisdom—not permission—lead the route."
+  },
+  {
+    "title": "Rosewater Echo",
+    "persian": "چو بشنوی سخن اهل دل مگو که خطاست\nسخن شناس نه ای جان من خطا اینجاست",
+    "translation": "When you hear the speech of heart-people, do not cry ‘wrong’;\nMy dear, the mistake is only that you do not speak the language of the soul.",
+    "faal": "An intuitive message is repeating. Learn its tone instead of debating its grammar."
+  },
+  {
+    "title": "Velvet Pilgrim",
+    "persian": "به کوی میکده یا رب سحر چه افتاد است\nکه جوش شاهد و ساقی و بوی باده بود",
+    "translation": "O Lord, what happened at the tavern's alley at dawn?\nWitnesses stirred, the cupbearer glowed, and the wine’s scent rose.",
+    "faal": "Magic brews before sunrise. Visit the place that feeds your spirit and let dawn conspire in your favor."
+  },
+  {
+    "title": "Jade Horizon",
+    "persian": "به آب دیده بشوییم خرقه‌های مستان\nاگر چه حاصل عمرم فراق یاران بود",
+    "translation": "Let us wash the revelers’ robes with rivers of tears;\nThough most of life has passed in separation from friends.",
+    "faal": "Cleansing grief is sacred. Ritualize your tears, then step forward wrapped in newly blessed garments."
+  },
+  {
+    "title": "Opal Lantern",
+    "persian": "بیا که رونق این کارخانه کم نشود\nبه زهد همچو تویی یا به فسق همچون من",
+    "translation": "Come, for the splendor of this workshop never fades;\nNeither by your piety nor by my mischief.",
+    "faal": "The universe can handle your honesty. Show up as you are—the light you carry matters more than your perfection."
   }
 ]
