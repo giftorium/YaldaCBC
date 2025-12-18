@@ -73,13 +73,11 @@ const fortuneState = {
 
 const fortuneElements = {
     ctaButton: null,
-    stage: null,
-    revealButton: null,
+    ctaLabel: null,
     result: null,
     translation: null,
     interpretation: null,
-    spinAgainBtn: null,
-    indicator: null
+    title: null
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -108,38 +106,25 @@ function initNavigation() {
 
 function initFortuneConsole() {
     fortuneElements.ctaButton = document.getElementById('getFaalButton');
-    fortuneElements.stage = document.getElementById('fortuneStage');
-    fortuneElements.revealButton = document.getElementById('revealButton');
     fortuneElements.result = document.getElementById('fortuneResult');
     fortuneElements.translation = document.getElementById('poemTranslation');
     fortuneElements.interpretation = document.getElementById('poemInterpretation');
-    fortuneElements.spinAgainBtn = document.getElementById('spinAgainBtn');
-    fortuneElements.indicator = document.getElementById('consoleIndicator');
+    fortuneElements.title = document.getElementById('poemTitle');
 
-    if (!fortuneElements.ctaButton || !fortuneElements.stage || !fortuneElements.revealButton) {
+    if (!fortuneElements.ctaButton) {
         return;
     }
 
-    const labelTarget = fortuneElements.revealButton.querySelector('.button-text');
-    fortuneState.revealDefaultText = labelTarget
-        ? labelTarget.textContent.trim()
-        : fortuneElements.revealButton.textContent.trim();
+    fortuneElements.ctaLabel = fortuneElements.ctaButton.querySelector('.cta-text');
+    fortuneState.revealDefaultText = fortuneElements.ctaLabel
+        ? fortuneElements.ctaLabel.textContent.trim()
+        : fortuneElements.ctaButton.textContent.trim();
 
-    fortuneElements.ctaButton.addEventListener('click', () => {
-        fortuneElements.stage.style.display = 'grid';
-        fortuneElements.stage.style.opacity = '1';
-        fortuneElements.stage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-
-    fortuneElements.revealButton.addEventListener('click', revealFortune);
-
-    if (fortuneElements.spinAgainBtn) {
-        fortuneElements.spinAgainBtn.addEventListener('click', revealFortune);
-    }
+    fortuneElements.ctaButton.addEventListener('click', revealFortune);
 }
 
 function revealFortune() {
-    if (!fortuneElements.revealButton || fortuneState.isRevealing) {
+    if (!fortuneElements.ctaButton || fortuneState.isRevealing) {
         return;
     }
 
@@ -147,19 +132,10 @@ function revealFortune() {
     setRevealButtonState(true);
     hideFortuneResult();
 
-    if (fortuneElements.indicator) {
-        fortuneElements.indicator.classList.add('active');
-    }
-
-    const revealDelay = 1400 + Math.random() * 600;
+    const revealDelay = 700 + Math.random() * 400;
     setTimeout(() => {
         const selectedFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
         showFortuneResult(selectedFortune);
-
-        if (fortuneElements.indicator) {
-            fortuneElements.indicator.classList.remove('active');
-        }
-
         setRevealButtonState(false);
         fortuneState.isRevealing = false;
     }, revealDelay);
@@ -172,6 +148,9 @@ function showFortuneResult(fortune) {
 
     fortuneElements.translation.innerHTML = fortune.translation.replace(/\n/g, '<br>');
     fortuneElements.interpretation.textContent = fortune.interpretation;
+    if (fortuneElements.title) {
+        fortuneElements.title.textContent = fortune.title;
+    }
 
     fortuneElements.result.classList.remove('hidden');
     fortuneElements.result.classList.add('visible');
@@ -187,17 +166,13 @@ function hideFortuneResult() {
 }
 
 function setRevealButtonState(isLoading) {
-    if (!fortuneElements.revealButton) {
+    if (!fortuneElements.ctaButton) {
         return;
     }
 
-    fortuneElements.revealButton.disabled = isLoading;
+    fortuneElements.ctaButton.disabled = isLoading;
 
-    if (fortuneElements.spinAgainBtn) {
-        fortuneElements.spinAgainBtn.disabled = isLoading;
-    }
-
-    const labelTarget = fortuneElements.revealButton.querySelector('.button-text') || fortuneElements.revealButton;
+    const labelTarget = fortuneElements.ctaLabel || fortuneElements.ctaButton;
     if (isLoading) {
         labelTarget.textContent = 'Consulting Hafez...';
     } else {
