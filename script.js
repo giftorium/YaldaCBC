@@ -1,70 +1,132 @@
 // ========================================
-// YALDA NIGHT - ENGLISH-ONLY INTERACTIVE EXPERIENCE
-// Fortune Wheel + Atmospheric Enhancements (Quiz removed)
+// YALDA NIGHT - INTERACTIVE EXPERIENCE
+// Fortune Wheel + Atmospheric Enhancements
 // ========================================
 
-const fortunes = [
+const fallbackFortunes = [
     {
-        title: "Cupbearer",
-        translation: "Cupbearer, bring forth the cup and place it at my lips\nLove felt simple at dawn, yet the path soon revealed its trials",
-        interpretation: "New beginnings are thrilling, but depth arrives only after you face a few honest challenges."
+        title: "Saqi's Call",
+        persian: `الا یا ایها الساقی ادر کاسا و ناولها\nکه عشق آسان نمود اول ولی افتاد مشکل ها`,
+        translation: `Cupbearer, keep the goblet turning and place it at our lips;\nLove looked easy at sunrise, yet soon revealed its knots.`,
+        faal: `A fresh desire is awakening. Welcome it, but do not assume the road will stay simple. Patience is part of the blessing.`
     },
     {
-        title: "Mirror of Awareness",
-        translation: "Where is righteous action and where am I within my ruins?\nThe path stretches far between who I am and who I wish to be",
-        interpretation: "Take inventory of your inner world. Awareness is the map that turns longing into motion."
+        title: "Angelic Brew",
+        persian: `دوش دیدم که ملائک در میخانه زدند\nگل آدم بسرشتند و به پیمانه زدند`,
+        translation: `Last night I saw the angels knock upon the tavern door;\nThey kneaded Adam's clay and measured it with the wine cup.`,
+        faal: `The unseen is collaborating on your behalf. Allow a sacred mix of destiny and delight to remake your plans.`
     },
     {
-        title: "Beloved Teacher",
-        translation: "My beloved never studied nor wrote a single line\nYet a single glance from her teaches a hundred scholars",
-        interpretation: "Wisdom can feel informal and surprising. Trust lessons that arrive through lived experience."
+        title: "Snared Heart",
+        persian: `هر که دلارام دید از دلش آرام رفت\nچشم ندارد خلاص هر که در این دام رفت`,
+        translation: `Whoever glimpsed that gentle beloved lost the calm of the heart;\nNo eye finds release once it steps inside this snare.`,
+        faal: `Attachment is transforming you. Instead of fighting the pull, learn from it and let devotion refine your character.`
     },
     {
-        title: "Breath of Dawn",
-        translation: "At daybreak I told the wind the story of my heart\nFor it is confidant of souls and keeper of quiet secrets",
-        interpretation: "Let your worries travel. Confiding in a trusted listener lightens the path ahead."
+        title: "Separation Ends",
+        persian: `روز هجران و شب فرقت یار آخر شد\nزدم این فال و گذشت اختر و کار آخر شد`,
+        translation: `The day of separation and the night of parting finally ended;\nI cast this omen and the turning star announced the work is done.`,
+        faal: `Cycles of waiting are closing. Prepare your space and spirit for reunion, resolution, or long-awaited news.`
     },
     {
-        title: "Vigil of Light",
-        translation: "In the darkest night the fearful waves rose high\nWhat do those resting on the shore know of our storm?",
-        interpretation: "You understand your struggle better than anyone else. Honor your courage and keep steering forward."
+        title: "Bury the Gloom",
+        persian: `ساقیا برخیز و در ده جام را\nخاک بر سر کن غم ایام را`,
+        translation: `Cupbearer, rise and fill the cup once more;\nCover the head of sorrowful days with dust and send them off.`,
+        faal: `Change the atmosphere yourself. A bold gesture or celebration will break the stale mood and invite better fortune.`
     },
     {
-        title: "Rebel Joy",
-        translation: "Come, for the palace of hopeful plans is fragile\nBring wine, for the foundation of life rests upon the wind",
-        interpretation: "Perfection is overrated. Celebrate what is here now and let delight steady your steps."
+        title: "Royal Heart",
+        persian: `ای دل غلام شاه جهان باش و شاه باش\nپیوسته در حمایت لطف اله باش`,
+        translation: `O heart, be both servant and king under the Sovereign of the world;\nStay forever sheltered inside divine kindness.`,
+        faal: `Lead with humility and courage at the same time. Aligning with a higher ethic gives you both authority and safety.`
     },
     {
-        title: "Sacred Message",
-        translation: "After stories and laughter we opened Hafez at random\nThe poem became a lantern, guiding the wish in our hearts",
-        interpretation: "Guidance often arrives once you declare your intention. Ask clearly, then stay open to an answer."
+        title: "Secret Gallery",
+        persian: `به تماشاگه راز آمد و آیینه به دست\nکه به هر جا نظر انداخت جز تو ندید`,
+        translation: `He entered the gallery of secrets with a mirror in hand;\nWherever he gazed he saw nothing but you.`,
+        faal: `Clear away distractions. Reflection will show that the answer you seek has been present in every scene.`
     },
     {
-        title: "Garden Promise",
-        translation: "Each pomegranate seed shimmers like a jewel of dawn\nIts crimson glow carries the memory of summer's warmth",
-        interpretation: "Tender rituals sustain us through winter. Nourish yourself with reminders of abundance."
+        title: "Scatter Blossoms",
+        persian: `بیا تا گل بر افشانیم و می در ساغر اندازیم\nفلک را سقف بشکافیم و طرحی نو در اندازیم`,
+        translation: `Come, let us scatter roses and pour wine into the cup;\nLet us tear the roof of the heavens and sketch a brand-new design.`,
+        faal: `It is time to innovate. Gather your allies, celebrate, and disrupt tired limits with joyful courage.`
     },
     {
-        title: "Candle Devotion",
-        translation: "In the alley of love be like a candle, bright and burning\nOnly a candle that fully glows keeps a flame alive",
-        interpretation: "Offer your full presence to what matters. Half-light cannot warm a gathering."
+        title: "Primordial Light",
+        persian: `در ازل پرتو حسنت ز تجلی دم زد\nعشق پیدا شد و آتش به همه عالم زد`,
+        translation: `At pre-eternity the ray of your beauty flashed;\nLove appeared and set the entire cosmos aflame.`,
+        faal: `A timeless inspiration is touching you now. Let passion ignite your craft or calling without apology.`
     },
     {
-        title: "Quiet Hope",
-        translation: "I sat in hope of seeing you, radiant rose\nEven if you withhold the meeting, hope itself is sweet",
-        interpretation: "Expectation need not be heavy. Let hope become a gentle companion rather than a demand."
+        title: "Morning Breeze",
+        persian: `نسیم باد صبا دوشم آگهی آورد\nکه روز محنت و غم رو به کوتهی آورد`,
+        translation: `The dawn breeze visited me last night with news;\nIt said the days of toil and grief are bending toward an end.`,
+        faal: `Relief is already traveling your way. Keep your routines steady and welcome the first sign of ease.`
     },
     {
-        title: "Saffron Horizon",
-        translation: "Darkness believes itself endless until dawn breathes\nLight always remembers the way back",
-        interpretation: "Every season turns. Trust that the return of brightness is already on its way to you."
+        title: "Exile Drum",
+        persian: `مرا در منزل جانان چه امن عیش چون هر دم\nجرس فریاد می دارد که بربندید محمل ها`,
+        translation: `How can I rest in the beloved's abode when every moment\nThe caravan bell cries, 'Pack up the litters now!'`,
+        faal: `Do not cling to temporary comfort. Be ready to move quickly when destiny signals a new migration.`
     },
     {
-        title: "Nightingale Oath",
-        translation: "O nightingale, pour out your longing until you laugh\nYour song will split the bud so the blossom can speak",
-        interpretation: "Vulnerability is fertile ground. Sharing your truth is what finally allows joy to bloom."
+        title: "Stormed Night",
+        persian: `شب تاریک و بیم موج و گردابی چنین هایل\nکجا دانند حال ما سبکباران ساحل ها`,
+        translation: `A dark night, fearful waves, a whirlpool wild and deep;\nHow could the light travellers on shore know what we endure?`,
+        faal: `Your struggle is valid even if others do not see it. Stay focused on navigation rather than outside opinions.`
+    },
+    {
+        title: "Vanishing Heart",
+        persian: `دل می رود ز دستم صاحب دلان خدا را\nدردا که راز پنهان خواهد شد آشکارا`,
+        translation: `My heart is slipping from my grasp, O keepers of hearts;\nAlas, this hidden secret is about to shine in the open.`,
+        faal: `Truth wants expression. Share authentically before circumstances reveal what you prefer to guide yourself.`
+    },
+    {
+        title: "Shirazi Promise",
+        persian: `اگر آن ترک شیرازی به دست آرد دل ما را\nبه خال هندویش بخشم سمرقند و بخارا را`,
+        translation: `If that Shirazi Turk were to claim my heart,\nI would gift Samarkand and Bukhara for the mole upon her cheek.`,
+        faal: `Value can shift overnight. Be willing to trade old ambitions for the single bond or idea that truly moves you.`
+    },
+    {
+        title: "Joseph Returns",
+        persian: `یوسف گمگشته باز آید به کنعان غم مخور\nکلبه احزان شود روزی گلستان غم مخور`,
+        translation: `The lost Joseph returns to Canaan, do not grieve;\nThe hut of sorrows will one day turn to a garden, do not grieve.`,
+        faal: `Hope is justified. A missing piece, person, or resource is on the way back once you keep faith.`
+    },
+    {
+        title: "Desert Envoy",
+        persian: `صبا به لطف بگو آن غزال رعنا را\nکه سر به کوه و بیابان تو داده ای ما را`,
+        translation: `Kind breeze, tell that graceful gazelle;\nYour wandering has driven us into mountains and deserts.`,
+        faal: `Send the message you have been holding. Honest communication will shorten the distance between hearts.`
+    },
+    {
+        title: "Listen Well",
+        persian: `چو بشنوی سخن اهل دل مگو که خطاست\nسخن شناس نه ای جان من خطا اینجاست`,
+        translation: `When you hear the speech of heart-people, do not call it wrong;\nMy dear, the error lies in not knowing the language of the soul.`,
+        faal: `Guidance may sound unfamiliar. Suspend judgment and learn the dialect of intuition before deciding.`
+    },
+    {
+        title: "Fragrant Crossing",
+        persian: `صبا اگر گذرت بر دیار یار فتد\nزبان حال مرا بازگوی یار نزد`,
+        translation: `Breeze, if your path passes through the beloved's land,\nSpeak the language of my state when you stand before that friend.`,
+        faal: `Allies can carry your intentions farther than you can alone. Share your prayer with a trusted messenger.`
+    },
+    {
+        title: "Guiding Star",
+        persian: `در این شب سیاه گم شد راه مقصود\nاز گوشه ای برون آی ای کوکب هدایت`,
+        translation: `In this black night the road to my aim is lost;\nRise from some corner, O guiding star of direction.`,
+        faal: `Ask openly for guidance. A mentor or sign will appear as soon as you admit you cannot see the path.`
+    },
+    {
+        title: "Tear-Stained Eyes",
+        persian: `ز گریه مردم چشمم نشسته در خون است\nببین که در طلبت حال مردمان چون است`,
+        translation: `From endless weeping, the people of my eyes are seated in blood;\nSee what becomes of lovers who keep searching for you.`,
+        faal: `Emotion is not weakness. Let your sincerity show, but also soothe yourself with rest and trusted company.`
     }
 ];
+
+let fortunes = [];
 
 const fortuneState = {
     isRevealing: false,
@@ -75,12 +137,14 @@ const fortuneElements = {
     ctaButton: null,
     ctaLabel: null,
     result: null,
+    original: null,
     translation: null,
     interpretation: null,
     title: null
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    cacheFortuneElements();
     initNavigation();
     initFortuneConsole();
     initScrollAnimations();
@@ -88,11 +152,28 @@ document.addEventListener('DOMContentLoaded', () => {
     initParallaxLayers();
     initSparkleEffects();
     initPointerPulse();
+    loadFortunes();
     console.log('Yalda Night experience ready - may your fortune shine.');
 });
 
+function cacheFortuneElements() {
+    fortuneElements.ctaButton = document.getElementById('getFaalButton');
+    fortuneElements.result = document.getElementById('fortuneResult');
+    fortuneElements.original = document.getElementById('poemOriginal');
+    fortuneElements.translation = document.getElementById('poemTranslation');
+    fortuneElements.interpretation = document.getElementById('poemInterpretation');
+    fortuneElements.title = document.getElementById('poemTitle');
+    fortuneElements.ctaLabel = fortuneElements.ctaButton
+        ? fortuneElements.ctaButton.querySelector('.cta-text')
+        : null;
+}
+
 function initNavigation() {
     const navButtons = document.querySelectorAll('.nav-btn');
+    if (navButtons.length === 0) {
+        return;
+    }
+
     navButtons.forEach((btn) => {
         btn.addEventListener('click', () => {
             const targetId = btn.getAttribute('data-section');
@@ -105,26 +186,56 @@ function initNavigation() {
 }
 
 function initFortuneConsole() {
-    fortuneElements.ctaButton = document.getElementById('getFaalButton');
-    fortuneElements.result = document.getElementById('fortuneResult');
-    fortuneElements.translation = document.getElementById('poemTranslation');
-    fortuneElements.interpretation = document.getElementById('poemInterpretation');
-    fortuneElements.title = document.getElementById('poemTitle');
-
     if (!fortuneElements.ctaButton) {
         return;
     }
 
-    fortuneElements.ctaLabel = fortuneElements.ctaButton.querySelector('.cta-text');
     fortuneState.revealDefaultText = fortuneElements.ctaLabel
         ? fortuneElements.ctaLabel.textContent.trim()
         : fortuneElements.ctaButton.textContent.trim();
 
     fortuneElements.ctaButton.addEventListener('click', revealFortune);
+    hideFortuneResult();
+    setFortuneAvailability(false, 'Loading poems...');
+}
+
+function loadFortunes() {
+    if (!fortuneElements.ctaButton) {
+        return;
+    }
+
+    if (window.location.protocol === 'file:') {
+        useFallbackFortunes('Running offline; using bundled fortunes.');
+        return;
+    }
+
+    fetch('data/faals.json', { cache: 'no-store' })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if (!Array.isArray(data) || data.length === 0) {
+                if (!useFallbackFortunes('faals.json empty; using bundled fortunes.')) {
+                    setFortuneAvailability(false, 'Poems unavailable');
+                }
+                return;
+            }
+            fortunes = data;
+            setFortuneAvailability(true);
+        })
+        .catch((error) => {
+            console.error('Unable to load faals.json', error);
+            if (!useFallbackFortunes('faals.json fetch failed; using bundled fortunes.')) {
+                setFortuneAvailability(false, 'Poems unavailable');
+            }
+        });
 }
 
 function revealFortune() {
-    if (!fortuneElements.ctaButton || fortuneState.isRevealing) {
+    if (!fortuneElements.ctaButton || fortuneState.isRevealing || fortunes.length === 0) {
         return;
     }
 
@@ -146,10 +257,15 @@ function showFortuneResult(fortune) {
         return;
     }
 
-    fortuneElements.translation.innerHTML = fortune.translation.replace(/\n/g, '<br>');
-    fortuneElements.interpretation.textContent = fortune.interpretation;
+    if (fortuneElements.original) {
+        const persianText = fortune.persian || '';
+        fortuneElements.original.innerHTML = persianText.replace(/\n/g, '<br>');
+    }
+
+    fortuneElements.translation.innerHTML = (fortune.translation || '').replace(/\n/g, '<br>');
+    fortuneElements.interpretation.textContent = fortune.faal || '';
     if (fortuneElements.title) {
-        fortuneElements.title.textContent = fortune.title;
+        fortuneElements.title.textContent = fortune.title || 'Fāl-e Hafez';
     }
 
     fortuneElements.result.classList.remove('hidden');
@@ -178,6 +294,34 @@ function setRevealButtonState(isLoading) {
     } else {
         labelTarget.textContent = fortuneState.revealDefaultText;
     }
+}
+
+function setFortuneAvailability(isAvailable, message) {
+    if (!fortuneElements.ctaButton) {
+        return;
+    }
+
+    fortuneElements.ctaButton.disabled = !isAvailable;
+    const labelTarget = fortuneElements.ctaLabel || fortuneElements.ctaButton;
+
+    if (message) {
+        labelTarget.textContent = message;
+    } else if (!fortuneState.isRevealing) {
+        labelTarget.textContent = fortuneState.revealDefaultText;
+    }
+}
+
+function useFallbackFortunes(reason) {
+    if (!fallbackFortunes.length) {
+        return false;
+    }
+
+    fortunes = fallbackFortunes;
+    setFortuneAvailability(true);
+    if (reason) {
+        console.warn(reason);
+    }
+    return true;
 }
 
 function initScrollAnimations() {

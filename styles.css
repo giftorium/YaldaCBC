@@ -171,6 +171,16 @@ p {
 
 
 /* ========================================
+.poem-original {
+    font-family: 'Spectral', serif;
+    font-size: 1.3rem;
+    line-height: 2;
+    color: #2f1606;
+    margin-bottom: var(--spacing-md);
+    direction: rtl;
+    text-align: right;
+}
+
    NAVIGATION
    ======================================== */
 .main-nav {
