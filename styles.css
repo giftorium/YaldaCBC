@@ -45,6 +45,7 @@
     --font-display: 'Spectral', serif;
     --font-body: 'Source Sans 3', sans-serif;
     --font-accent: 'Spectral', serif;
+    --font-farsi: 'Vazirmatn', 'Scheherazade New', serif;
 }
 
 /* ========================================
@@ -171,18 +172,8 @@ p {
 
 
 /* ========================================
-.poem-original {
-    font-family: 'Spectral', serif;
-    font-size: 1.3rem;
-    line-height: 2;
-    color: #2f1606;
-    margin-bottom: var(--spacing-md);
-    direction: rtl;
-    text-align: right;
-}
-
-   NAVIGATION
-   ======================================== */
+    NAVIGATION
+    ======================================== */
 .main-nav {
     display: flex;
     justify-content: center;
@@ -616,77 +607,103 @@ p {
 }
 
 .poem-page {
-    width: min(600px, 100%);
-    background: radial-gradient(circle at top, rgba(20, 20, 20, 0.95), rgba(5, 5, 5, 0.98));
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 25px 65px rgba(0, 0, 0, 0.65);
+    width: min(640px, 100%);
+    background: radial-gradient(circle at top, rgba(25, 25, 25, 0.95), rgba(5, 5, 5, 0.98));
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65);
     overflow: hidden;
+    position: relative;
+    backdrop-filter: blur(8px);
 }
 
 .poem-page::after {
-    display: none;
+    content: '';
+    position: absolute;
+    inset: 18px;
+    border-radius: 24px;
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    pointer-events: none;
+    opacity: 0.7;
+    z-index: 0;
 }
 
-.page-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.02);
+.poem-page > * {
+    position: relative;
+    z-index: 1;
 }
 
-.page-tab {
-    font-family: var(--font-accent);
-    font-size: 0.8rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.75);
-    padding: 0.25rem 0.9rem;
+.poem-sigil {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: var(--spacing-sm);
+    opacity: 0.85;
+}
+
+.sigil-line {
+    width: 90px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.7), transparent);
+}
+
+.sigil-gem {
+    width: 18px;
+    height: 18px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: transparent;
-}
-
-.poem-meta {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 1.5rem 0;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.6);
-    letter-spacing: 0.05em;
-}
-
-.poem-tag {
-    text-transform: uppercase;
-    font-family: var(--font-display);
-    color: var(--persian-gold);
-}
-
-.poem-timestamp {
-    font-family: var(--font-body);
+    border: 1px solid rgba(212, 175, 55, 0.6);
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.85), rgba(193, 18, 31, 0.4));
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.45);
 }
 
 .page-body {
-    padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-xl);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    text-align: center;
 }
 
 .page-intro {
     font-family: var(--font-accent);
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
     text-align: center;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    max-width: 420px;
 }
 
 .poem-title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     text-align: center;
     color: var(--persian-gold);
     margin-bottom: var(--spacing-sm);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
+}
+
+.poem-original {
+    font-family: var(--font-farsi);
+    font-size: 1.45rem;
+    line-height: 2.3;
+    color: rgba(255, 255, 255, 0.95);
+    direction: rtl;
+    text-align: center;
+    width: min(520px, 100%);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+}
+
+.poem-original br {
+    display: block;
+    content: '';
+    margin-bottom: 0.4rem;
 }
 
 .page-divider {
@@ -698,24 +715,30 @@ p {
 
 .poem-translation {
     font-family: var(--font-accent);
-    font-size: 1.25rem;
-    line-height: 1.7;
+    font-size: 1.2rem;
+    line-height: 1.8;
     color: var(--cream);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
     font-style: italic;
-    background: rgba(255, 255, 255, 0.05);
-    padding: var(--spacing-md);
-    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.08);
+    width: min(520px, 100%);
+    text-align: left;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
 }
 
 .poem-interpretation {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.85);
-    background: rgba(0, 0, 0, 0.35);
-    padding: var(--spacing-md);
-    border-radius: 16px;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.88);
+    background: rgba(0, 0, 0, 0.45);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    width: min(520px, 100%);
+    text-align: left;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
 }
 
 
