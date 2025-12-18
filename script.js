@@ -445,21 +445,44 @@ function remoteCounterRequest(action) {
             }
             return response.json();
         })
-        .then((data) => {
-            if (typeof data === 'number') {
-                return data;
-            }
-            if (data && typeof data.data === 'number') {
-                return data.data;
-            }
-            if (data && typeof data.value === 'number') {
-                return data.value;
-            }
-            if (data && typeof data.count === 'number') {
-                return data.count;
-            }
-            return null;
-        });
+        .then((data) => parseCounterValue(data));
+}
+
+function parseCounterValue(payload) {
+    if (typeof payload === 'number') {
+        return payload;
+    }
+
+    if (!payload || typeof payload !== 'object') {
+        return null;
+    }
+
+    if (typeof payload.data === 'number') {
+        return payload.data;
+    }
+
+    const nested = payload.data || payload;
+
+    if (typeof nested.value === 'number') {
+        return nested.value;
+    }
+
+    if (typeof nested.count === 'number') {
+        return nested.count;
+    }
+
+    if (typeof nested.total === 'number') {
+        return nested.total;
+    }
+
+    const up = typeof nested.up_count === 'number' ? nested.up_count : null;
+    const down = typeof nested.down_count === 'number' ? nested.down_count : null;
+
+    if (up !== null || down !== null) {
+        return (up || 0) - (down || 0);
+    }
+
+    return null;
 }
 
 function cacheRemoteFaalCount(value) {
