@@ -762,18 +762,20 @@ p {
 }
 
 .client-badge {
-    margin: 0.5rem auto 0;
+    margin: 0.75rem auto 0;
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.75);
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .client-badge img {
-    height: 28px;
+    height: 34px;
     width: auto;
     display: block;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+    opacity: 0.9;
 }
 
 .dev-credit {
@@ -1077,6 +1079,19 @@ p {
     font-size: 2rem;
     margin-bottom: var(--spacing-md);
     font-family: 'Playfair Display', serif;
+}
+
+.giftorium-note {
+    background: rgba(0, 0, 0, 0.38);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.giftorium-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: var(--spacing-md);
+    font-family: 'Cormorant Garamond', serif;
 }
 
 .contact-details {
