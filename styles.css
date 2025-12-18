@@ -714,8 +714,8 @@ p {
 
 .poem-original {
     font-family: var(--font-farsi);
-    font-size: 1.45rem;
-    line-height: 2.3;
+    font-size: 1.3rem;
+    line-height: 2.2;
     color: rgba(255, 255, 255, 0.95);
     direction: rtl;
     text-align: center;
@@ -744,30 +744,32 @@ p {
 
 .poem-translation {
     font-family: var(--font-accent);
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: var(--cream);
+    font-size: 1.3rem;
+    line-height: 1.9;
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: var(--spacing-sm);
     font-style: italic;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.05);
     padding: var(--spacing-md) var(--spacing-lg);
     border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     width: min(520px, 100%);
     text-align: left;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
 }
 
 .poem-interpretation {
-    font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.88);
-    background: rgba(0, 0, 0, 0.45);
-    padding: var(--spacing-md) var(--spacing-lg);
-    border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    width: min(520px, 100%);
+    font-size: 1.4rem;
+    line-height: 1.95;
+    color: var(--persian-gold);
+    font-weight: 600;
+    background: linear-gradient(135deg, rgba(193, 18, 31, 0.45), rgba(5, 5, 5, 0.8));
+    padding: calc(var(--spacing-md) * 1.1) var(--spacing-lg);
+    border-radius: 22px;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    width: min(560px, 100%);
     text-align: left;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -1020,13 +1022,13 @@ p {
     }
     
     .poem-translation {
-        font-size: 1rem;
+        font-size: 1.15rem;
         padding: var(--spacing-sm);
     }
     
     .poem-interpretation {
-        font-size: 0.95rem;
-        padding: var(--spacing-sm);
+        font-size: 1.3rem;
+        padding: calc(var(--spacing-sm) * 1.1);
     }
     
     .footer-content {
