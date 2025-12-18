@@ -143,6 +143,26 @@ const fortuneElements = {
     title: null
 };
 
+const analyticsConfig = {
+    baseUrl: 'https://api.countapi.xyz',
+    namespace: 'giftorium-yalda-v3',
+    counters: {
+        visits: 'visits',
+        faals: 'faals'
+    }
+};
+
+const analyticsState = {
+    visitSessionKey: 'yalda-visit-counted',
+    sessionStorageEnabled: null
+};
+
+const analyticsElements = {
+    visits: null,
+    faals: null,
+    container: null
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     cacheFortuneElements();
     initNavigation();
@@ -152,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initParallaxLayers();
     initSparkleEffects();
     initPointerPulse();
+    initAnalytics();
     loadFortunes();
     console.log('Yalda Night experience ready - may your fortune shine.');
 });
@@ -166,6 +187,10 @@ function cacheFortuneElements() {
     fortuneElements.ctaLabel = fortuneElements.ctaButton
         ? fortuneElements.ctaButton.querySelector('.cta-text')
         : null;
+
+    analyticsElements.visits = document.getElementById('visitCount');
+    analyticsElements.faals = document.getElementById('faalCount');
+    analyticsElements.container = document.querySelector('.fortune-metrics');
 }
 
 function initNavigation() {
@@ -247,6 +272,7 @@ function revealFortune() {
     setTimeout(() => {
         const selectedFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
         showFortuneResult(selectedFortune);
+        registerFaalReveal();
         setRevealButtonState(false);
         fortuneState.isRevealing = false;
     }, revealDelay);
@@ -322,6 +348,142 @@ function useFallbackFortunes(reason) {
         console.warn(reason);
     }
     return true;
+}
+
+function initAnalytics() {
+    if ((!analyticsElements.visits && !analyticsElements.faals) || typeof fetch !== 'function') {
+        return;
+    }
+
+    preloadFaalCounter();
+    handleVisitCount();
+}
+
+function preloadFaalCounter() {
+    if (!analyticsElements.faals) {
+        return;
+    }
+
+    getCounterValue('faals')
+        .then((value) => updateMetricValue(analyticsElements.faals, value))
+        .catch(() => updateMetricValue(analyticsElements.faals));
+}
+
+function handleVisitCount() {
+    if (!analyticsElements.visits) {
+        return;
+    }
+
+    const canStore = canUseSessionStorage();
+    const alreadyRecorded = canStore && sessionStorage.getItem(analyticsState.visitSessionKey);
+
+    const visitPromise = alreadyRecorded
+        ? getCounterValue('visits')
+        : incrementCounter('visits').then((value) => {
+            if (canStore) {
+                sessionStorage.setItem(analyticsState.visitSessionKey, 'true');
+            }
+            return value;
+        });
+
+    visitPromise
+        .then((value) => updateMetricValue(analyticsElements.visits, value))
+        .catch(() => updateMetricValue(analyticsElements.visits));
+}
+
+function registerFaalReveal() {
+    if (!analyticsElements.faals || typeof fetch !== 'function') {
+        return;
+    }
+
+    incrementCounter('faals')
+        .then((value) => updateMetricValue(analyticsElements.faals, value))
+        .catch(() => {});
+}
+
+function updateMetricValue(element, value) {
+    if (!element) {
+        return;
+    }
+
+    if (typeof value === 'number' && Number.isFinite(value)) {
+        element.textContent = value.toLocaleString('en-US');
+    } else {
+        element.textContent = '—';
+    }
+}
+
+function incrementCounter(counterKey) {
+    return runCounterRequest('hit', counterKey).catch((error) => {
+        if (error && error.status === 404) {
+            return createCounter(counterKey).then(() => runCounterRequest('hit', counterKey));
+        }
+        throw error;
+    });
+}
+
+function getCounterValue(counterKey) {
+    return runCounterRequest('get', counterKey).catch((error) => {
+        if (error && error.status === 404) {
+            return createCounter(counterKey);
+        }
+        throw error;
+    });
+}
+
+function runCounterRequest(action, counterKey) {
+    const counterName = analyticsConfig.counters[counterKey];
+    if (!counterName || typeof fetch !== 'function') {
+        return Promise.reject(new Error('Unknown counter.'));
+    }
+
+    const url = `${analyticsConfig.baseUrl}/${action}/${analyticsConfig.namespace}/${counterName}`;
+    return fetch(url)
+        .then((response) => {
+            if (!response.ok) {
+                const err = new Error(`Counter ${action} failed`);
+                err.status = response.status;
+                throw err;
+            }
+            return response.json();
+        })
+        .then((data) => (typeof data.value === 'number' ? data.value : null));
+}
+
+function createCounter(counterKey, initialValue = 0) {
+    const counterName = analyticsConfig.counters[counterKey];
+    if (!counterName || typeof fetch !== 'function') {
+        return Promise.reject(new Error('Unknown counter.'));
+    }
+
+    const url = `${analyticsConfig.baseUrl}/create?namespace=${encodeURIComponent(analyticsConfig.namespace)}&key=${encodeURIComponent(counterName)}&value=${initialValue}`;
+
+    return fetch(url)
+        .then((response) => {
+            if (!response.ok) {
+                const err = new Error('Counter create failed');
+                err.status = response.status;
+                throw err;
+            }
+            return initialValue;
+        });
+}
+
+function canUseSessionStorage() {
+    if (analyticsState.sessionStorageEnabled !== null) {
+        return analyticsState.sessionStorageEnabled;
+    }
+
+    try {
+        const testKey = '__yalda_session_test__';
+        sessionStorage.setItem(testKey, '1');
+        sessionStorage.removeItem(testKey);
+        analyticsState.sessionStorageEnabled = true;
+    } catch (error) {
+        analyticsState.sessionStorageEnabled = false;
+    }
+
+    return analyticsState.sessionStorageEnabled;
 }
 
 function initScrollAnimations() {

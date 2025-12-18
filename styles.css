@@ -624,6 +624,39 @@ p {
     justify-content: center;
 }
 
+.fortune-metrics {
+    margin-top: var(--spacing-md);
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.metric-card {
+    min-width: 210px;
+    padding: calc(var(--spacing-sm) * 0.8) var(--spacing-md);
+    border-radius: 18px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    background: rgba(5, 5, 5, 0.45);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+    text-align: center;
+}
+
+.metric-label {
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+    margin-bottom: 0.3rem;
+}
+
+.metric-value {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    color: var(--persian-gold);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
 .fortune-result {
     margin-top: 0;
     display: flex;
@@ -1029,6 +1062,19 @@ p {
     .poem-interpretation {
         font-size: 1.3rem;
         padding: calc(var(--spacing-sm) * 1.1);
+    }
+
+    .fortune-metrics {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .metric-card {
+        width: 100%;
+    }
+
+    .metric-value {
+        font-size: 1.5rem;
     }
     
     .footer-content {
